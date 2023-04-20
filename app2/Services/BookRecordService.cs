@@ -29,6 +29,7 @@ namespace app2.Services
             var result = from m in this._db.bookrecs
                    select m;
             return result;
+
         }
         public void UpdateBook(Bookrec book)
         {
