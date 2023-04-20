@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using app2.IServices;
 using app2.Models;
 using app2.Services;
 
@@ -16,6 +12,7 @@ namespace app2.Controllers
     {
         private readonly BookRecordService _bookRecordService;
 
+        //Constructor
         public BookrecsController()
         {
             _bookRecordService = new BookRecordService();

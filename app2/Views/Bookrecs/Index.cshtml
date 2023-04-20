@@ -83,39 +83,16 @@
 
 
 @if (ViewBag.bookdetails != null)
-{
-    <h3>Book Details</h3>
-    <table class="table">
-        <tr>
-            <th>S/N</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Page No</th>
-            <th>ISBN</th>
-            <th>BarCode</th>
-            <th>Publisher</th>
-            <th>Publish Date</th>
+{<div>
+        <h3>Book Details</h3>
+        <h4>Title:</h4>@ViewBag.bookdetails.Title
+        <h4>Author:</h4>@ViewBag.bookdetails.Author
+        <h4>Number of Pages:</h4>@ViewBag.bookdetails.PageNo
+        <h4>ISBN:</h4>@ViewBag.bookdetails.ISBN
+        <h4>Barcode:</h4>@ViewBag.bookdetails.BarCode
+        <h4>Publisher:</h4>@ViewBag.bookdetails.Publisher
+        <h4>Date of Publication:</h4>@ViewBag.bookdetails.PublishDate
 
-        </tr>
-        
-        <tr>
-            <td>1</td>
-            <td>@ViewBag.bookdetails.Title</td>
-            <td>@ViewBag.bookdetails.Author</td>
-            <td>@ViewBag.bookdetails.PageNo</td>
-            <td>@ViewBag.bookdetails.ISBN</td>
-            <td>@ViewBag.bookdetails.BarCode</td>
-            <td>@ViewBag.bookdetails.Publisher</td>
-            <td>@ViewBag.bookdetails.PublishDate</td>
-
-
-
-
-
-        </tr>
-    </table>
-    <div>
-        @Html.ActionLink("< Exit", "Index")
     </div>
 }
 
