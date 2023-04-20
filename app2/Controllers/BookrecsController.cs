@@ -6,20 +6,26 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using app2.IServices;
 using app2.Models;
+using app2.Services;
 
 namespace app2.Controllers
 {
     public class BookrecsController : Controller
     {
-        private BookrecDBContext db = new BookrecDBContext();
+        private readonly BookRecordService _bookRecordService;
+
+        public BookrecsController()
+        {
+            _bookRecordService = new BookRecordService();
+        }
+
 
         // GET: Bookrecs
         public ActionResult Index(string searchstring)
         {
-            
-            var search = from m in db.bookrecs
-                         select m;
+            var search = _bookRecordService.GetBooks();
             if (!String.IsNullOrEmpty(searchstring))
             {
                 search = search.Where(s => s.Title.Contains(searchstring));
@@ -31,9 +37,9 @@ namespace app2.Controllers
         [HttpPost]
         public ActionResult bookdetails(string title)
         {
-            var book = db.bookrecs.FirstOrDefault(b => b.Title == title);
+            var book = _bookRecordService.GetBookByTitle(title);
             ViewBag.bookdetails = book;
-            return View("Index", db.bookrecs.ToList());
+            return View("Index", _bookRecordService.GetBooks());
 
         }
 
@@ -54,11 +60,7 @@ namespace app2.Controllers
         {
             if (ModelState.IsValid) 
             {
-                bookrec.Creation = DateTime.Now;
-                bookrec.UpdateDate = DateTime.Now;
-                db.bookrecs.Add(bookrec);
-                
-                db.SaveChanges();
+                _bookRecordService.SaveBook(bookrec);
                 return RedirectToAction("Index");
             }
 
@@ -72,7 +74,7 @@ namespace app2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bookrec bookrec = db.bookrecs.Find(id);
+            Bookrec bookrec = _bookRecordService.GetBookByID(id.Value);
             if (bookrec == null)
             {
                 return HttpNotFound();
@@ -90,8 +92,7 @@ namespace app2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(bookrec).State = EntityState.Modified;
-                db.SaveChanges();
+                _bookRecordService.UpdateBook(bookrec);
                 return RedirectToAction("Index");
             }
             return View(bookrec);
@@ -104,7 +105,7 @@ namespace app2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bookrec bookrec = db.bookrecs.Find(id);
+            Bookrec bookrec = _bookRecordService.GetBookByID(id.Value);
             if (bookrec == null)
             {
                 return HttpNotFound();
@@ -117,19 +118,8 @@ namespace app2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Bookrec bookrec = db.bookrecs.Find(id);
-            db.bookrecs.Remove(bookrec);
-            db.SaveChanges();
+            _bookRecordService.DeleteBook(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

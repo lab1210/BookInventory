@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IServices\IBookRecordService.cs" />
     <Compile Include="Migrations\202304150848385_InitialCreate.cs" />
     <Compile Include="Migrations\202304150848385_InitialCreate.designer.cs">
       <DependentUpon>202304150848385_InitialCreate.cs</DependentUpon>
@@ -140,6 +141,7 @@
     <Compile Include="Models\Bookrec.cs" />
     <Compile Include="Models\BookrecDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BookRecordService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
