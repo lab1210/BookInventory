@@ -1,0 +1,122 @@
+﻿@model IEnumerable<app2.Models.Bookrec>
+
+@{
+    ViewBag.Title = "Shelf";
+}
+
+<h2>Book List</h2>
+@using (Html.BeginForm("Index", "Bookrecs", FormMethod.Get))
+{
+    <p>
+        Search By Title: @Html.TextBox("searchstring")
+        <input type="submit" value="Filter" />
+    </p>}
+
+<p>
+    @Html.ActionLink("Add New Book", "Create")
+    <h6><b>Click a Title to see details</b></h6>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            S/N
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Creation)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </th>
+        <th></th>
+    </tr>
+    @{
+        int i = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @{
+                i++;
+            }
+            <td>
+                @i
+            </td>
+            <td>
+                @using (Html.BeginForm("bookdetails", "Bookrecs", FormMethod.Post))
+                {
+                    <input type="hidden" name="title" value="@item.Title" />
+                    <input type="submit" value="@item.Title" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creation)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+</table>
+
+
+@if (ViewBag.bookdetails != null)
+{
+    <h3>Book Details</h3>
+    <table class="table">
+        <tr>
+            <th>S/N</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Page No</th>
+            <th>ISBN</th>
+            <th>BarCode</th>
+            <th>Publisher</th>
+            <th>Publish Date</th>
+
+        </tr>
+        
+        <tr>
+            <td>1</td>
+            <td>@ViewBag.bookdetails.Title</td>
+            <td>@ViewBag.bookdetails.Author</td>
+            <td>@ViewBag.bookdetails.PageNo</td>
+            <td>@ViewBag.bookdetails.ISBN</td>
+            <td>@ViewBag.bookdetails.BarCode</td>
+            <td>@ViewBag.bookdetails.Publisher</td>
+            <td>@ViewBag.bookdetails.PublishDate</td>
+
+
+
+
+
+        </tr>
+    </table>
+    <div>
+        @Html.ActionLink("< Exit", "Index")
+    </div>
+}
+
+
